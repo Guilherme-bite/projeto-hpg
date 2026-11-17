@@ -26,7 +26,7 @@ def usuario(app):
 
 @pytest.fixture
 def pedido(app):
-    p = Pedido(numero_pedido="1042", cliente="Cliente Teste", valor_total=450)
+    p = Pedido(numero="1042", cliente="Cliente Teste", valor_total=450)
     db.session.add(p)
     db.session.commit()
     return p

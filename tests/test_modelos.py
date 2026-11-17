@@ -26,7 +26,7 @@ def test_pedido_nasce_pendente(pedido):
 
 
 def test_numero_de_pedido_nao_pode_repetir(pedido):
-    db.session.add(Pedido(numero_pedido="1042", cliente="Outro", valor_total=10))
+    db.session.add(Pedido(numero="1042", cliente="Outro", valor_total=10))
     with pytest.raises(IntegrityError):
         db.session.commit()
     db.session.rollback()
@@ -34,7 +34,7 @@ def test_numero_de_pedido_nao_pode_repetir(pedido):
 
 @pytest.mark.parametrize("valor", [0, -5])
 def test_valor_total_deve_ser_maior_que_zero(app, valor):
-    db.session.add(Pedido(numero_pedido="9", cliente="X", valor_total=valor))
+    db.session.add(Pedido(numero="9", cliente="X", valor_total=valor))
     with pytest.raises(IntegrityError):
         db.session.commit()
     db.session.rollback()
