@@ -26,15 +26,15 @@ def create_app(config_object=Config):
     login_manager.login_message = "Faça login para continuar."
     login_manager.login_message_category = "info"
 
-    from app import models  # noqa: F401  (registra as tabelas no SQLAlchemy)
-    from app.routes import auth, main
+    from app import models
+    from app.routes import auth, main, pedidos
 
     app.register_blueprint(auth.bp)
     app.register_blueprint(main.bp)
+    app.register_blueprint(pedidos.bp)
 
     @app.before_request
     def exigir_login():
-        """Toda rota exige login, exceto as da lista de publicas (RNF01)."""
         if request.endpoint in ROTAS_PUBLICAS:
             return None
         if not current_user.is_authenticated:

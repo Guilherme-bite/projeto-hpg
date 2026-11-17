@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block titulo %}Registrar Pagamento{% endblock %}
+{% block conteudo %}
+<h1>Registrar Pagamento</h1>
+<div class="cartao" style="margin-bottom: 16px;">
+  <p><strong>Pedido nº {{ pedido.numero }}</strong></p>
+  <p>Cliente: {{ pedido.cliente }}</p>
+  <p>Valor total: R$ {{ "%.2f"|format(pedido.valor_total) }}</p>
+  <p>Situação atual: <strong>{{ pedido.situacao }}</strong></p>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="cartao" id="form-pagamento">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="campo">
+    <label>Método</label>
+    <select name="metodo" id="metodo" style="width:100%; min-height:48px; border-radius:10px; padding:8px; border: 2px solid #5b6770;" onchange="verificarMetodo()">
+      <option value="pix">Pix</option>
+      <option value="dinheiro">Dinheiro</option>
+    </select>
+  </div>
+  
+  <div class="campo">
+    <label>Valor (R$)</label>
+    <input type="number" step="0.01" name="valor" required>
+  </div>
+  
+  <div class="campo">
+    <label>Comprovante (imagem ou PDF)</label>
+    <input type="file" name="comprovante" id="comprovante" accept=".png,.jpg,.jpeg,.pdf">
+    <small id="aviso-comprovante" style="color: var(--erro); display: none;">* Obrigatório para Pix</small>
+  </div>
+  
+  <button type="submit" class="botao botao-principal">Salvar pagamento</button>
+</form>
+
+<script>
+  function verificarMetodo() {
+    const metodo = document.getElementById('metodo').value;
+    const inputComprovante = document.getElementById('comprovante');
+    const aviso = document.getElementById('aviso-comprovante');
+    
+    if (metodo === 'pix') {
+      inputComprovante.required = true;
+      aviso.style.display = 'inline';
+    } else {
+      inputComprovante.required = false;
+      aviso.style.display = 'none';
+    }
+  }
+  // Executa ao carregar a página
+  verificarMetodo();
+</script>
+{% endblock %}

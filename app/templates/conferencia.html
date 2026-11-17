@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block titulo %}Conferência{% endblock %}
+{% block conteudo %}
+<h1>Conferência do dia</h1>
+<div class="cartao" style="margin-bottom: 16px; display: flex; justify-content: space-between;">
+  <div>
+    <small>Total Pix</small><br>
+    <strong>R$ {{ "%.2f"|format(total_pix) }}</strong>
+  </div>
+  <div>
+    <small>Total Dinheiro</small><br>
+    <strong>R$ {{ "%.2f"|format(total_dinheiro) }}</strong>
+  </div>
+</div>
+
+<div class="cartao">
+  {% for p in pedidos %}
+    <div style="border-bottom: 1px solid #ccc; padding: 8px 0;">
+      <strong>Pedido {{ p.numero }}</strong> - <span style="color: var(--erro);">{{ p.situacao }}</span>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
