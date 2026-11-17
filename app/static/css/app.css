@@ -21,3 +21,14 @@ body { margin: 0; font-family: system-ui, sans-serif; background: var(--fundo); 
 .erro-campo { color: var(--erro); font-weight: 700; margin: 6px 0 0; }
 .nota { color: #5b6770; }
 :focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+/* Cores de Alerta para Feedback do Usuario */
+.aviso-parcial {
+  border: 2px solid #d97706; /* Laranja */
+  background: #fef3c7; /* Amarelo claro */
+  color: #92400e;
+}
+.aviso-pendente {
+  border: 2px solid #dc2626; /* Vermelho */
+  background: #fee2e2; /* Vermelho claro */
+  color: #991b1b;
+}
