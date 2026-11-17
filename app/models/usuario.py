@@ -1,0 +1,22 @@
+from datetime import datetime, timezone
+
+from app.extensions import db
+
+
+def agora():
+    return datetime.now(timezone.utc)
+
+
+class Usuario(db.Model):
+    __tablename__ = "usuario"
+
+    id = db.Column(db.Integer, primary_key=True)
+    login = db.Column(db.String(50), nullable=False, unique=True)
+    senha_hash = db.Column(db.String(255), nullable=False)
+    ativo = db.Column(db.Boolean, nullable=False, default=True)
+    criado_em = db.Column(db.DateTime, nullable=False, default=agora)
+
+    pagamentos = db.relationship("Pagamento", back_populates="usuario")
+
+    def __repr__(self):
+        return f"<Usuario {self.login}>"
