@@ -9,8 +9,18 @@
   {% for p in pedidos %}
     <div style="border-bottom: 1px solid #ccc; padding: 12px 0;">
       <strong>Pedido {{ p.numero }}</strong> - {{ p.cliente }}<br>
-      Total: R$ {{ "%.2f"|format(p.valor_total) }} | Status: <span class="aviso aviso-info" style="padding: 2px 8px; display: inline-block; margin:0;">{{ p.situacao }}</span><br>
-      <a href="{{ url_for('pedidos.registrar_pagamento', pedido_id=p.id) }}" style="color: var(--verde); font-weight: bold;">Registrar pagamento</a>
+      Total: R$ {{ "%.2f"|format(p.valor_total) }}<br>
+      
+      {% if p.situacao == 'parcial' %}
+        <span class="aviso aviso-parcial" style="padding: 2px 8px; display: inline-block; margin: 4px 0;">{{ p.situacao|upper }} (Faltam R$ {{ "%.2f"|format(p.valor_restante) }})</span>
+      {% elif p.situacao == 'pendente' %}
+        <span class="aviso aviso-pendente" style="padding: 2px 8px; display: inline-block; margin: 4px 0;">{{ p.situacao|upper }} (Faltam R$ {{ "%.2f"|format(p.valor_restante) }})</span>
+      {% else %}
+        <span class="aviso aviso-info" style="padding: 2px 8px; display: inline-block; margin: 4px 0;">{{ p.situacao|upper }}</span>
+      {% endif %}
+      
+      <br>
+      <a href="{{ url_for('pedidos.registrar_pagamento', pedido_id=p.id) }}" style="color: var(--verde); font-weight: bold; font-size: 0.9em;">Registrar pagamento</a>
     </div>
   {% else %}
     <p>Nenhum pedido cadastrado ainda.</p>
